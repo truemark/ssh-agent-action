@@ -111,16 +111,31 @@ const core = __importStar(__nccwpck_require__(2186));
 const config_1 = __nccwpck_require__(88);
 const execa_1 = __nccwpck_require__(9956);
 const core_1 = __nccwpck_require__(2186);
+const path = __importStar(__nccwpck_require__(1017));
+const fs = __importStar(__nccwpck_require__(7147));
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const sshDir = path.join((_a = process.env['HOME']) !== null && _a !== void 0 ? _a : '', '.ssh');
+            if (!fs.existsSync(sshDir)) {
+                fs.mkdirSync(sshDir, { recursive: true });
+                fs.chmodSync(sshDir, '700');
+            }
+            const socketsDir = path.join(sshDir, 'sockets');
+            if (!fs.existsSync(socketsDir)) {
+                fs.mkdirSync(socketsDir, { recursive: true });
+                fs.chmodSync(socketsDir, '700');
+            }
+            const sshAuthSock = path.join(socketsDir, 'ssh-auth.sock');
             const config = (0, config_1.loadConfig)();
-            (0, execa_1.execaSync)('ssh-agent', ['-a', '/tmp/ssh-auth.sock']);
-            process.env['SSH_AUTH_SOCK'] = '/tmp/ssh-auth.sock';
+            (0, execa_1.execaSync)('ssh-agent', ['-a', sshAuthSock]);
+            process.env['SSH_AUTH_SOCK'] = sshAuthSock;
             if (config.privateKeyPath) {
                 (0, execa_1.execaSync)('ssh-add', [config.privateKeyPath]);
             }
-            (0, core_1.setOutput)('ssh-auth-sock', '/tmp/ssh-auth.sock');
+            (0, core_1.setOutput)('ssh-auth-sock', sshAuthSock);
+            console.log(`SSH agent is running and socket is located at ${sshAuthSock}`);
         }
         catch (error) {
             if (error instanceof Error)
