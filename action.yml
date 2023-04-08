@@ -1,11 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'SSH Agent Action'
+description: 'Starts and SSH agent and adds a private key'
+author: 'TrueMark'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  private-key-path:
+    required: false
+    description: 'Path to the private key'
 runs:
   using: 'node16'
   main: 'dist/index.js'
+outputs:
+  ssh-auth-sock:
+    description: 'Path to the socket of the SSH agent'

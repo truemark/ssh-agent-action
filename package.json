@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "ssh-agent-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub action which starts and SSH agent and adds a private key to it.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,17 +15,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/truemark/ssh-agent-action.git"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "TrueMark",
+  "license": "BSD-3-Clause",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "execa": "^7.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
