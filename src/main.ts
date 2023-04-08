@@ -7,6 +7,7 @@ async function run(): Promise<void> {
   try {
     const config = loadConfig()
     execaSync('ssh-agent', ['-a', '/tmp/ssh-auth.sock'])
+    process.env['SSH_AUTH_SOCK'] = '/tmp/ssh-auth.sock'
     if (config.privateKeyPath) {
       execaSync('ssh-add', [config.privateKeyPath])
     }
