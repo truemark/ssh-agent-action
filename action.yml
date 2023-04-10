@@ -1,6 +1,9 @@
 name: 'SSH Agent Action'
 description: 'Starts and SSH agent and adds a private key'
 author: 'TrueMark'
+branding:
+  icon: 'check-circle'
+  color: 'red'
 inputs:
   private-key-path:
     required: false
